@@ -3,6 +3,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
+  username: ubuntu
 
 development:
   <<: *default
@@ -16,5 +17,4 @@ test:
 production:
   <<: *default
   database: Playlist_production
-  username: Playlist
-  password: <%= ENV['PLAYLIST_DATABASE_PASSWORD'] %>
+  password: 
