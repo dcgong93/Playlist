@@ -1,0 +1,20 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: Playlist_development
+
+
+test:
+  <<: *default
+  database: Playlist_test
+
+production:
+  <<: *default
+  database: Playlist_production
+  username: Playlist
+  password: <%= ENV['PLAYLIST_DATABASE_PASSWORD'] %>

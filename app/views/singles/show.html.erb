@@ -1,0 +1,29 @@
+<div class="container">
+  <div id="nav" class="row">
+    <a class="col-sm-offset-9 col-sm-1" href="/singles"><u>Dashboard</u></a>
+    <form action="/sessions/<%= @user.id %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <input type="hidden" name="_method" value="delete" />
+      <button type="submit" class="btn btn-link"><u>Log Out</u></button>
+    </form><br /><br />
+  </div>
+  <h4>Others who added <%= @single.artist %> - <%= @single.title %></h4><br />
+  <div id="table">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Times Added</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users_uniq.each do |u| %>
+        <tr>
+          <td><a href="/users/<%= u.id %>"><u><%= u.first_name %> <%= u.last_name%></u></a></td>
+          <td><%= u.single_tracks.where(id: @single.id).count %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

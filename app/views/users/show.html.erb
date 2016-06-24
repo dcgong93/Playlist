@@ -1,0 +1,31 @@
+<div class="container">
+  <div id="nav" class="row">
+    <a class="col-sm-offset-9 col-sm-1" href="/singles"><u>Dashboard</u></a>
+    <form action="/sessions/<%= @user.id %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <input type="hidden" name="_method" value="delete" />
+      <button type="submit" class="btn btn-link"><u>Log Out</u></button>
+    </form><br /><br />
+  </div>
+  <h4><%= @user.first_name %> <%= @user.last_name %>'s Playlist</h4>
+  <div id="table">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Title</th>
+          <th>Times Added</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= @songs_uniq.each do |song| %>
+        <tr>
+          <td><%= song.artist %></td>
+          <td><%= song.title %></td>
+          <td><%= song.track_users.where(id: @user.id).count %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

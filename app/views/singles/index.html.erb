@@ -1,0 +1,71 @@
+<div class="container">
+  <div id="nav" class="row">
+    <div class="col-sm-offset-11 col-sm-1">
+      <form action="/sessions/<%= @user.id %>" method="post">
+        <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit" class="btn btn-link"><u>Log Out</u></button>
+      </form><br /><br />
+    </div>
+  </div>
+  <h4>Hello, <%= @user.first_name %> <%= @user.last_name %>!</h4><br />
+  <div id="table">
+    <p>All the songs in our hub:</p>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Title</th>
+          <th>No. of Times Song Has Been Added</th>
+          <th>Add to Playlist</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @songs.each do |song| %>
+        <tr>
+          <td><%= song.artist %> </td>
+          <td><a href="/singles/<%=song.id%>"><u><%= song.title %> </u></a></td>
+          <td><%= song.tracks.count %> </td>
+          <td>
+            <form action="/tracks" method="post">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+              <input type="hidden" name="song_id" value="<%= song.id%>">
+              <button type="submit" class="btn btn-default">Add</button>
+            </form>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="add_song">
+    <div class="col-md-offset-1 col-md-6">
+      <form class="form-horizontal" action="/singles" method="post">
+        <h4>Add a Song</h4>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="form-group">
+          <label for="title" class="col-sm-2 control-label">Title: </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="title" name="single[title]">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="artist" class="col-sm-2 control-label">Artist</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="artist" name="single[artist]">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-5 col-sm-10">
+            <button type="submit" class="btn btn-default">Add Song</button>
+          </div>
+        </div>
+      </form>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |err| %>
+        <p> <%= err %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
